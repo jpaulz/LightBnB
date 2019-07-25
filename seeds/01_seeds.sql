@@ -1,6 +1,6 @@
 INSERT INTO users (id, name, email, password)
-	-- VALUES (1, 'Malloy Jenkins', 'mall@jen.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.'),
-  VALUES
+VALUES
+(1, 'Malloy Jenkins', 'mall@jen.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.'),
 (5, 'Eva Stanley','eva@sta.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.'),
 (6, 'Louisa Meyer','lou@mey.com', '$2a$10$FB/BOAVhpuLvpOREQVmvmezD4ED/.JBIDRh70tGevYzYzQgFId2u.');
 
@@ -10,7 +10,7 @@ description,
 thumbnail_photo_url,
 cover_photo_url,
 cost_per_night,
-parking_space,
+parking_spaces,
 number_of_bathrooms,
 number_of_bedrooms,
 country,
