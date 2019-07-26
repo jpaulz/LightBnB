@@ -21,11 +21,9 @@ pool.connect(() => console.log("You're copnnected"));
 
 
 const getUserWithEmail = function(email) {
-  return new Promise((resolve,reject)=>{
-    pool.query(
-      `SELECT * FROM users WHERE email = '${email}'`)
-      .then(res => res.rows[0]);
-  });
+  return pool.query(
+    `SELECT * FROM users WHERE email = '${email}'`)
+    .then(res => res.rows[0]);
 };
 exports.getUserWithEmail = getUserWithEmail;
 
@@ -37,11 +35,9 @@ exports.getUserWithEmail = getUserWithEmail;
  * @return {Promise<{}>} A promise to the user.
  */
 const getUserWithId = function(id) {
-  return new Promise((resolve,reject)=>{
-    pool.query(
-      `SELECT * FROM users WHERE id = '${id}';`)
-      .then(res => res.rows[0]);
-  });
+  return pool.query(
+    `SELECT * FROM users WHERE id = '${id}';`)
+    .then(res => res.rows[0]);
 };
 exports.getUserWithId = getUserWithId;
 
@@ -73,8 +69,19 @@ exports.addUser = addUser;
  * @param {string} guest_id The id of the user.
  * @return {Promise<[{}]>} A promise to the reservations.
  */
-const getAllReservations = function(guest_id, limit = 10) {
-  return getAllProperties(null, 2);
+const getAllReservations = function(guestId, limit = 10) {
+  return pool.query(`
+    SELECT properties.*, reservations.*, avg(rating) as average_rating
+    FROM reservations
+    JOIN properties ON reservations.property_id = properties.id
+    JOIN property_reviews ON properties.id = property_reviews.property_id 
+    WHERE reservations.guest_id = $1
+    AND reservations.end_date < now()::date
+    GROUP BY properties.id, reservations.id
+    ORDER BY reservations.start_date
+    LIMIT $2;
+    `, [guestId,limit])
+    .then(res => res.rows);
 };
 exports.getAllReservations = getAllReservations;
 
